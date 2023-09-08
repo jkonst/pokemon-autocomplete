@@ -15,7 +15,7 @@
 
     &:focus {
       ~ .icon-container .search-icon {
-        color: #365cc6;
+        color: #005CC6;
       }
 
       ~ .autocomplete-container {
@@ -28,23 +28,24 @@
     position: absolute;
     top: 65%;
     left: 8px;
+    color: #666;
     transform: translateY(-50%);
     pointer-events: none;
 
     &.active {
-      color: #365cc6;
+      color: #005CC6;
     }
   }
 
   .field-label {
-    font-size: 12px;
+    font-size: 11px;
     color: #666;
     margin-bottom: 4px;
     display: block;
   }
 
   &.open, &:focus-within {
-    border-bottom: 4px solid #365cc6;
+    border-bottom: 4px solid #005CC6;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -63,7 +64,7 @@
 
   .arrow-icon {
     &.up {
-      color: #365cc6;
+      color: #005CC6;
     }
   }
 
