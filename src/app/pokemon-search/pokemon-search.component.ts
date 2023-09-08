@@ -39,7 +39,6 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
 
   loadMore(): void {
     if (this.nextUrl) {
-      console.log('JK loadMore');
       this.pokemonSearchService.fetchPokemons(this.nextUrl)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((response: PokemonApiResponse) => {

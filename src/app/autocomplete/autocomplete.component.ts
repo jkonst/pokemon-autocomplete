@@ -9,13 +9,16 @@ import {FormControl} from "@angular/forms";
 export class AutocompleteComponent<T> implements OnChanges {
   @Input() items?: T[] = [];
   @Input() label: string = '';
+  @Input() textPlaceholder: string = '';
   @Input() filterFn!: (item: T, query: string) => boolean;
   @Input() displayFn!: (item: T) => string;
 
   @Output() itemSelected = new EventEmitter<T>();
   @Output() loadMoreItems = new EventEmitter<void>();
+  @Output() loadInitialList = new EventEmitter<void>();
 
   searchControl = new FormControl();
+  isDropDownOpen = false;
   filteredItems: T[] = [];
 
   constructor() {
@@ -41,6 +44,15 @@ export class AutocompleteComponent<T> implements OnChanges {
 
   onSelectItem(item: T): void {
     this.itemSelected.emit(item);
+  }
+
+  clearInput(): void {
+    this.searchControl.setValue('');
+    this.loadInitialList.emit();
+  }
+
+  toggleDropdown(): void {
+    this.isDropDownOpen = !this.isDropDownOpen;
   }
 
   private arraysAreEqual(arr1: any[], arr2: any[]): boolean {

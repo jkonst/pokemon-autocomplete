@@ -1,6 +1,17 @@
-<label for="autocomplete">{{ label }}</label>
-<input id="autocomplete" type="text" [formControl]="searchControl">
+<div [class.open]="isDropDownOpen || searchControl.value" class="autocomplete-container">
+  <label class="field-label">{{ label }}</label>
+  <label [class.active]="isDropDownOpen || searchControl.value" *ngIf="!searchControl.value" class="placeholder-label">{{ textPlaceholder }}</label>
+  <input id="autocomplete" type="text" [formControl]="searchControl" class="autocomplete-input">
+  <div class="icon-container">
+    <i *ngIf="searchControl.value" class="material-icons close-icon" (click)="clearInput()">close</i>
+    <i *ngIf="!isDropDownOpen && !searchControl.value" class="material-icons arrow-icon" (click)="toggleDropdown()">keyboard_arrow_down</i>
+    <i *ngIf="isDropDownOpen && !searchControl.value" class="material-icons arrow-icon up" (click)="toggleDropdown()">keyboard_arrow_up</i>
+    <i *ngIf="searchControl.value" class="material-icons search-icon">search</i>
+  </div>
+</div>
+
 <app-scrollable-list
+  *ngIf="isDropDownOpen || searchControl.value"
   [items]="filteredItems"
   [displayFn]="displayFn"
   (itemSelected)="onSelectItem($event)"

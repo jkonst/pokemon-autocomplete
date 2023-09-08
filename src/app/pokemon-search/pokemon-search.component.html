@@ -2,6 +2,7 @@
   <app-autocomplete
     [items]="pokemons"
     [label]="labelName"
+    [textPlaceholder]="'Choose your favorite...'"
     [filterFn]="pokemonFilterFn"
     [displayFn]="pokemonDisplayFn"
     (loadMoreItems)="loadMore()"
