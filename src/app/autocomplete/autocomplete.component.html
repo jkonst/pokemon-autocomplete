@@ -1,0 +1,8 @@
+<label for="autocomplete">{{ label }}</label>
+<input id="autocomplete" type="text" [formControl]="searchControl">
+<app-scrollable-list
+  [items]="filteredItems"
+  [displayFn]="displayFn"
+  (itemSelected)="onSelectItem($event)"
+  (reachedBottom)="loadMoreItems.emit()">
+</app-scrollable-list>

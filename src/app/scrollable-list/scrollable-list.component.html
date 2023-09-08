@@ -1,0 +1,7 @@
+<div #scrollableDiv style="height: 300px; overflow-y: auto;">
+  <ul>
+    <li *ngFor="let item of items" (click)="selectItem(item)">
+      {{ displayFn(item) }}
+    </li>
+  </ul>
+</div>

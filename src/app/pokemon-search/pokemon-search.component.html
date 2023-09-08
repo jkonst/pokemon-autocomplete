@@ -1,0 +1,12 @@
+<form [formGroup]="searchForm">
+  <app-autocomplete
+    [items]="pokemons"
+    [label]="labelName"
+    [filterFn]="pokemonFilterFn"
+    [displayFn]="pokemonDisplayFn"
+    (loadMoreItems)="loadMore()"
+    (itemSelected)="showDetails($event)"
+  >
+  </app-autocomplete>
+</form>
+
