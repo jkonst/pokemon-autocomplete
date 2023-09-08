@@ -30,9 +30,13 @@ export class PokemonSearchService {
   private readonly apiBaseUrl = environment.apiBaseUrl;
   constructor(private http: HttpClient) {}
 
-  fetchPokemons(url?: string): Observable<PokemonApiResponse> {
-    const apiUrl = url || this.apiBaseUrl + '?&limit=151';
-    return this.http.get<PokemonApiResponse>(apiUrl);
+  fetchInitialPokemons(): Observable<PokemonApiResponse> {
+    const initialUrl = this.apiBaseUrl + '?&limit=151';
+    return this.http.get<PokemonApiResponse>(initialUrl);
+  }
+
+  fetchMorePokemons(url: string): Observable<PokemonApiResponse> {
+    return this.http.get<PokemonApiResponse>(url);
   }
 
   fetchPokemonDetails(name: string): Observable<PokemonDetails> {

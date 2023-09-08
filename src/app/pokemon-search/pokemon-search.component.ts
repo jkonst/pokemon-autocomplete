@@ -20,8 +20,12 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
-    this.pokemonSearchService.fetchPokemons()
+  ngOnInit() {
+    this.loadInitialPokemons();
+  }
+
+  loadInitialPokemons() {
+    this.pokemonSearchService.fetchInitialPokemons()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((response: PokemonApiResponse) => {
         this.pokemons = response.results;
@@ -29,7 +33,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
       });
   }
 
-  showDetails(selectedPokemon: Pokemon): void {
+  showDetails(selectedPokemon: Pokemon) {
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
       .subscribe(details => {
         // Implement your logic to show details of the selected Pokemon
@@ -37,9 +41,9 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
       });
   }
 
-  loadMore(): void {
+  loadMore() {
     if (this.nextUrl) {
-      this.pokemonSearchService.fetchPokemons(this.nextUrl)
+      this.pokemonSearchService.fetchMorePokemons(this.nextUrl)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((response: PokemonApiResponse) => {
           this.pokemons = [...this.pokemons, ...response.results];
@@ -54,6 +58,10 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
 
   pokemonDisplayFn(item: Pokemon): string {
     return item.name;
+  }
+
+  resetPokemons() {
+    this.loadInitialPokemons();
   }
 
   ngOnDestroy(): void {
