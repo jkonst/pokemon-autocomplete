@@ -20,7 +20,7 @@ export class ScrollableListComponent<T> implements AfterViewInit{
   @Output() reachedBottom = new EventEmitter<void>();
   @Output() itemSelected = new EventEmitter<T>();
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
-
+  selectedItem?: T;
   onScroll(event: Event): void {
     const element = event.target as HTMLElement;
     if (element.scrollHeight - element.scrollTop === element.clientHeight) {
@@ -29,6 +29,7 @@ export class ScrollableListComponent<T> implements AfterViewInit{
   }
 
   selectItem(item: T): void {
+    this.selectedItem = item;
     this.itemSelected.emit(item);
   }
 

@@ -1,0 +1,32 @@
+.scrollable-container {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari and Opera */
+  }
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #F2FAFE;
+  }
+
+  &.selected {
+    background-color: #DFF3FC;
+    font-weight: bold;
+  }
+}

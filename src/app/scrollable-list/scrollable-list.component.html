@@ -1,6 +1,10 @@
-<div #scrollableDiv style="height: 300px; overflow-y: auto;">
+<div #scrollableDiv class="scrollable-container" style="height: 300px; overflow-y: auto;">
   <ul>
-    <li *ngFor="let item of items" (click)="selectItem(item)">
+    <li
+      *ngFor="let item of items"
+      (click)="selectItem(item)"
+      [ngClass]="{'selected': selectedItem === item}"
+    >
       {{ displayFn(item) }}
     </li>
   </ul>
