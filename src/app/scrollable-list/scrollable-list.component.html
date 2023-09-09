@@ -8,4 +8,7 @@
       {{ displayFn(item) }}
     </li>
   </ul>
+  <div class="loading-text" *ngIf="isLoading">
+    Loading more items...
+  </div>
 </div>

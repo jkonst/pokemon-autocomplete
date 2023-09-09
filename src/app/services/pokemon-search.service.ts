@@ -1,5 +1,5 @@
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {delay, Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 
@@ -36,7 +36,9 @@ export class PokemonSearchService {
   }
 
   fetchMorePokemons(url: string): Observable<PokemonApiResponse> {
-    return this.http.get<PokemonApiResponse>(url);
+    return this.http.get<PokemonApiResponse>(url).pipe(
+      delay(1000) // Delay for 1 second for visual effect
+    );
   }
 
   fetchPokemonDetails(name: string): Observable<PokemonDetails> {

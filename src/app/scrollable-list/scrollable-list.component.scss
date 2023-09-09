@@ -30,3 +30,13 @@ li {
     font-weight: bold;
   }
 }
+
+.loading-text {
+  position: sticky;
+  bottom: 0;
+  //height: 20px;
+  //width: 100%;
+  z-index: 1;
+  text-align: center;
+  background-color: #fff;
+}
