@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {arraysAreEqual} from "../utils";
@@ -9,7 +9,8 @@ import {ScrollableListComponent} from "../scrollable-list/scrollable-list.compon
   selector: 'app-autocomplete',
   imports: [ReactiveFormsModule, ScrollableListComponent, CommonModule],
   templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss']
+  styleUrls: ['./autocomplete.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutocompleteComponent<T> implements OnChanges {
   @Input() items?: T[] = [];
@@ -39,6 +40,7 @@ export class AutocompleteComponent<T> implements OnChanges {
       const prevItems = items.previousValue;
       const currItems = items.currentValue;
       if (!arraysAreEqual(prevItems, currItems)) {
+        console.log('JK change filtered items');
         this.filteredItems = currItems;
       }
     }

@@ -1,8 +1,10 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter, inject,
+  EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
@@ -11,13 +13,15 @@ import {
 } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
+import {arraysAreEqual} from "../utils";
 
 @Component({
   standalone: true,
   selector: 'app-scrollable-list',
   imports: [CommonModule],
   templateUrl: './scrollable-list.component.html',
-  styleUrls: ['./scrollable-list.component.scss']
+  styleUrls: ['./scrollable-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
   @Input() items: T[] = [];
@@ -33,8 +37,12 @@ export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const { items } = changes;
-    if (items && !items.firstChange) {
-      this.isLoading = false;
+    if (items) {
+      const prevItems = items.previousValue;
+      const currItems = items.currentValue;
+      if (!arraysAreEqual(prevItems, currItems)) {
+        this.isLoading = false;
+      }
     }
   }
 
@@ -44,7 +52,7 @@ export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
 
   onScroll(event: Event): void {
     const element = event.target as HTMLElement;
-    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+    if (element.scrollHeight - element.scrollTop === element.clientHeight && !this.searchQuery) {
       this.isLoading = true;
       this.reachedBottom.emit();
     }
