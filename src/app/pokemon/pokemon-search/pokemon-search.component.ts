@@ -2,6 +2,7 @@ import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Subject, takeUntil} from "rxjs";
 import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
+import {capitalizeFirst} from "../../shared/utils";
 
 @Component({
   selector: 'app-pokemon-search',
@@ -38,7 +39,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   showDetails(selectedPokemon: Pokemon) {
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
       .subscribe(details => {
-        this.pokemonDetails = details;
+        this.pokemonDetails = {...details, name: capitalizeFirst(details.name)};
       });
   }
 
@@ -58,7 +59,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   pokemonDisplayFn(item: Pokemon): string {
-    return item.name;
+    return capitalizeFirst(item.name);
   }
 
   resetPokemons() {

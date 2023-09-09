@@ -9,3 +9,9 @@ export const arraysAreEqual = (arr1: any[], arr2: any[]): boolean => {
   }
   return true;
 }
+
+export const capitalizeFirst = (name: string): string => {
+  const firstCharUpperCase = name.charAt(0).toUpperCase();
+  const restOfTheName = name.substring(1);
+  return `${firstCharUpperCase}${restOfTheName}`;
+}
