@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, ChangeDetectionStrategy,
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter, inject,
@@ -17,8 +17,7 @@ import {CommonModule} from "@angular/common";
   selector: 'app-scrollable-list',
   imports: [CommonModule],
   templateUrl: './scrollable-list.component.html',
-  styleUrls: ['./scrollable-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./scrollable-list.component.scss']
 })
 export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
   @Input() items: T[] = [];

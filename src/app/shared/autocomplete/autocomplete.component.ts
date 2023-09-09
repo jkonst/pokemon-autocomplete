@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {arraysAreEqual} from "../utils";
@@ -9,8 +9,7 @@ import {ScrollableListComponent} from "../scrollable-list/scrollable-list.compon
   selector: 'app-autocomplete',
   imports: [ReactiveFormsModule, ScrollableListComponent, CommonModule],
   templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./autocomplete.component.scss']
 })
 export class AutocompleteComponent<T> implements OnChanges {
   @Input() items?: T[] = [];
