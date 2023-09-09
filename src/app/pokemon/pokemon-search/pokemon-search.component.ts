@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
-import {Subject, takeUntil} from "rxjs";
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Subject, takeUntil} from "rxjs";
+import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
 
 @Component({
   selector: 'app-pokemon-search',
@@ -15,7 +15,8 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   labelName = 'Favorite Character';
   pokemonDetails: PokemonDetails | null = null;
   private unsubscribe$ = new Subject<void>();
-  constructor(private pokemonSearchService: PokemonSearchService, private formBuilder: FormBuilder) {
+  private pokemonSearchService = inject(PokemonSearchService);
+  constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
       search: ['']
     });

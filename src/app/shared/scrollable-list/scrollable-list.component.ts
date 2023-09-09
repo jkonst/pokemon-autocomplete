@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, inject,
   Input,
   OnChanges,
   Output,
@@ -10,9 +10,12 @@ import {
   ViewChild
 } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
+import {CommonModule} from "@angular/common";
 
 @Component({
+  standalone: true,
   selector: 'app-scrollable-list',
+  imports: [CommonModule],
   templateUrl: './scrollable-list.component.html',
   styleUrls: ['./scrollable-list.component.scss']
 })
@@ -26,8 +29,8 @@ export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
   selectedItem?: T;
   isLoading = false;
+  private sanitizer = inject(DomSanitizer);
 
-  constructor(private sanitizer: DomSanitizer) {}
   ngOnChanges(changes: SimpleChanges) {
     const { items } = changes;
     if (items && !items.firstChange) {

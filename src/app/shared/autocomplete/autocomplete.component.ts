@@ -1,9 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FormControl} from "@angular/forms";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 import {arraysAreEqual} from "../utils";
+import {ScrollableListComponent} from "../scrollable-list/scrollable-list.component";
 
 @Component({
+  standalone: true,
   selector: 'app-autocomplete',
+  imports: [ReactiveFormsModule, ScrollableListComponent, CommonModule],
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
