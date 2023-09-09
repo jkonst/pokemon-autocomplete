@@ -1,5 +1,9 @@
-<div *ngIf="pokemonDetails">
-  <h2>{{ pokemonDetails.name }}</h2>
-  <img [src]="pokemonDetails.sprites.front_default" alt="{{ pokemonDetails.name }}">
-  <h2>{{ 'Weight: ' + pokemonDetails.weight }}</h2>
+<div *ngIf="pokemonDetails" class="pokemon-details-container">
+  <div class="image-container">
+    <img [src]="pokemonDetails.sprites.front_default" alt="{{ pokemonDetails.name }}">
+  </div>
+  <div class="text-details">
+    <p class="pokemon-name">{{ pokemonDetails.name }}</p>
+    <p class="pokemon-weight">{{ 'Weight: ' + pokemonDetails.weight }}</p>
+  </div>
 </div>
