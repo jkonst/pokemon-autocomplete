@@ -40,7 +40,6 @@ export class AutocompleteComponent<T> implements OnChanges {
       const prevItems = items.previousValue;
       const currItems = items.currentValue;
       if (!arraysAreEqual(prevItems, currItems)) {
-        console.log('JK change filtered items');
         this.filteredItems = currItems;
       }
     }
