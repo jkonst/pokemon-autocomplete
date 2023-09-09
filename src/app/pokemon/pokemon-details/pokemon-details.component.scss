@@ -12,7 +12,6 @@
   display: flex;
   justify-content: center;
   margin-right: 8px;
-  height: 64px;
 }
 
 .text-details {
@@ -25,9 +24,11 @@
 .pokemon-name {
   font-size: 20px;
   margin: 0;
+  line-height: 22px;
 }
 
 .pokemon-weight {
   font-size: 16px;
   margin: 0;
+  line-height: 22px;
 }
