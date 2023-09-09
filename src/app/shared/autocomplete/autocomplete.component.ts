@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormControl} from "@angular/forms";
+import {arraysAreEqual} from "../utils";
 
 @Component({
   selector: 'app-autocomplete',
@@ -10,7 +11,6 @@ export class AutocompleteComponent<T> implements OnChanges {
   @Input() items?: T[] = [];
   @Input() label: string = '';
   @Input() textPlaceholder: string = '';
-  @Input() isItemSelected = false;
   @Input() filterFn!: (item: T, query: string) => boolean;
   @Input() displayFn!: (item: T) => string;
 
@@ -20,7 +20,7 @@ export class AutocompleteComponent<T> implements OnChanges {
 
   searchControl = new FormControl();
   isDropDownOpen = false;
-  isInputDisabled = false;
+  isItemSelected = false;
   filteredItems: T[] = [];
 
   constructor() {
@@ -34,7 +34,7 @@ export class AutocompleteComponent<T> implements OnChanges {
     if (items) {
       const prevItems = items.previousValue;
       const currItems = items.currentValue;
-      if (!this.arraysAreEqual(prevItems, currItems)) {
+      if (!arraysAreEqual(prevItems, currItems)) {
         this.filteredItems = currItems;
       }
     }
@@ -47,30 +47,17 @@ export class AutocompleteComponent<T> implements OnChanges {
   onSelectItem(item: T): void {
     const value = this.displayFn(item);
     this.searchControl.setValue(value);
-    this.isInputDisabled = true;
+    this.isItemSelected = true;
     this.showDetails.emit(item);
   }
 
   clearInput(): void {
     this.searchControl.setValue('');
-    this.isInputDisabled = false;
+    this.isItemSelected = false;
     this.loadInitialList.emit();
   }
 
   toggleDropdown(): void {
     this.isDropDownOpen = !this.isDropDownOpen;
   }
-
-  private arraysAreEqual(arr1: any[], arr2: any[]): boolean {
-    if (!arr1 || !arr2 || arr1.length !== arr2.length) {
-      return false;
-    }
-    for (let i = 0; i < arr1.length; i++) {
-      if (arr1[i] !== arr2[i]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
 }

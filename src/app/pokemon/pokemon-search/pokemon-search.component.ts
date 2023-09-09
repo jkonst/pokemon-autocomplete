@@ -14,7 +14,6 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   labelName = 'Favorite Character';
   pokemonDetails: PokemonDetails | null = null;
-  isItemSelected = false;
   private unsubscribe$ = new Subject<void>();
   constructor(private pokemonSearchService: PokemonSearchService, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -36,7 +35,6 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   showDetails(selectedPokemon: Pokemon) {
-    this.isItemSelected = true;
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
       .subscribe(details => {
         this.pokemonDetails = details;
@@ -63,7 +61,6 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   resetPokemons() {
-    this.isItemSelected = false;
     this.pokemonDetails = null;
     this.loadInitialPokemons();
   }

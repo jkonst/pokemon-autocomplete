@@ -64,5 +64,4 @@ export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
     `;
     return this.sanitizer.bypassSecurityTrustHtml(highlightedText);
   }
-
 }
