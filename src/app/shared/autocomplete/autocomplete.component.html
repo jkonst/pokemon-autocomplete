@@ -7,10 +7,11 @@
   </label>
   <input
     id="autocomplete"
-     type="text"
-     [formControl]="searchControl"
-     [attr.disabled]="isItemSelected ? true : null"
-     class="autocomplete-input"
+    type="text"
+    autocomplete="off"
+    [formControl]="searchControl"
+    [attr.disabled]="isItemSelected ? true : null"
+    class="autocomplete-input"
   >
   <div class="icon-container">
     <i *ngIf="searchControl.value" class="material-icons close-icon" (click)="clearInput()">close</i>
