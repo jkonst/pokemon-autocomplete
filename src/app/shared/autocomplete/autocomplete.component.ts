@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormControl} from "@angular/forms";
 
 @Component({
@@ -10,15 +10,17 @@ export class AutocompleteComponent<T> implements OnChanges {
   @Input() items?: T[] = [];
   @Input() label: string = '';
   @Input() textPlaceholder: string = '';
+  @Input() isItemSelected = false;
   @Input() filterFn!: (item: T, query: string) => boolean;
   @Input() displayFn!: (item: T) => string;
 
-  @Output() itemSelected = new EventEmitter<T>();
+  @Output() showDetails = new EventEmitter<T>();
   @Output() loadMoreItems = new EventEmitter<void>();
   @Output() loadInitialList = new EventEmitter<void>();
 
   searchControl = new FormControl();
   isDropDownOpen = false;
+  isInputDisabled = false;
   filteredItems: T[] = [];
 
   constructor() {
@@ -43,11 +45,15 @@ export class AutocompleteComponent<T> implements OnChanges {
   }
 
   onSelectItem(item: T): void {
-    this.itemSelected.emit(item);
+    const value = this.displayFn(item);
+    this.searchControl.setValue(value);
+    this.isInputDisabled = true;
+    this.showDetails.emit(item);
   }
 
   clearInput(): void {
     this.searchControl.setValue('');
+    this.isInputDisabled = false;
     this.loadInitialList.emit();
   }
 

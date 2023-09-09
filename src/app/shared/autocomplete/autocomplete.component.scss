@@ -15,10 +15,6 @@
     outline: none;
 
     &:focus {
-      ~ .icon-container .search-icon {
-        color: #005CC6;
-      }
-
       ~ .autocomplete-container {
         @extend .active;
       }
@@ -62,6 +58,10 @@
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
+
+  .search-icon {
+    color: #005CC6;
+  }
 
   .arrow-icon {
     &.up {

@@ -7,13 +7,15 @@ import { AutocompleteComponent } from './shared/autocomplete/autocomplete.compon
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { ScrollableListComponent } from './shared/scrollable-list/scrollable-list.component';
+import { PokemonDetailsComponent } from './pokemon/pokemon-details/pokemon-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PokemonSearchComponent,
     AutocompleteComponent,
-    ScrollableListComponent
+    ScrollableListComponent,
+    PokemonDetailsComponent
   ],
   imports: [
     BrowserModule,

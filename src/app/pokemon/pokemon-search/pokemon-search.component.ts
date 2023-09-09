@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Pokemon, PokemonApiResponse, PokemonSearchService} from "../services/pokemon-search.service";
+import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
 import {Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
@@ -13,6 +13,8 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   nextUrl?: string;
   searchForm: FormGroup;
   labelName = 'Favorite Character';
+  pokemonDetails: PokemonDetails | null = null;
+  isItemSelected = false;
   private unsubscribe$ = new Subject<void>();
   constructor(private pokemonSearchService: PokemonSearchService, private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -34,10 +36,10 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   showDetails(selectedPokemon: Pokemon) {
+    this.isItemSelected = true;
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
       .subscribe(details => {
-        // Implement your logic to show details of the selected Pokemon
-        console.log(details);
+        this.pokemonDetails = details;
       });
   }
 
@@ -61,6 +63,8 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   resetPokemons() {
+    this.isItemSelected = false;
+    this.pokemonDetails = null;
     this.loadInitialPokemons();
   }
 

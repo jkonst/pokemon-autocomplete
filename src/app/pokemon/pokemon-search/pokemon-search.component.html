@@ -3,12 +3,18 @@
     [items]="pokemons"
     [label]="labelName"
     [textPlaceholder]="'Choose your favorite...'"
+    [isItemSelected]="isItemSelected"
     [filterFn]="pokemonFilterFn"
     [displayFn]="pokemonDisplayFn"
     (loadMoreItems)="loadMore()"
-    (itemSelected)="showDetails($event)"
+    (showDetails)="showDetails($event)"
     (loadInitialList)="resetPokemons()"
   >
   </app-autocomplete>
+
+  <app-pokemon-details
+    *ngIf="pokemonDetails"
+    [pokemonDetails]="pokemonDetails"
+  ></app-pokemon-details>
 </form>
 
