@@ -15,6 +15,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   labelName = 'Favorite Character';
   pokemonDetails: PokemonDetails | null = null;
+  isLoading = false;
   private unsubscribe$ = new Subject<void>();
   private pokemonSearchService = inject(PokemonSearchService);
   constructor(private formBuilder: FormBuilder) {
@@ -44,12 +45,14 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    if (this.nextUrl) {
+    if (this.nextUrl && !this.isLoading) {
+      this.isLoading = true;
       this.pokemonSearchService.fetchMorePokemons(this.nextUrl)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((response: PokemonApiResponse) => {
           this.pokemons = [...this.pokemons, ...response.results];
           this.nextUrl = response.next;
+          this.isLoading = false;
         });
     }
   }
