@@ -5,12 +5,8 @@
       (click)="selectItem(item)"
       [ngClass]="{'selected': selectedItem === item}"
     >
-      <ng-container *ngIf="searchQuery; else noHighlight">
-        <span>{{ displayFn(item).substring(0, displayFn(item).toLowerCase().indexOf(searchQuery.toLowerCase())) }}</span>
-        <span [style.backgroundColor]="shouldHighlight(displayFn(item), searchQuery) ? 'yellow' : 'transparent'">
-          {{ displayFn(item).substring(displayFn(item).toLowerCase().indexOf(searchQuery.toLowerCase()), displayFn(item).toLowerCase().indexOf(searchQuery.toLowerCase()) + searchQuery.length) }}
-        </span>
-        <span>{{ displayFn(item).substring(displayFn(item).toLowerCase().indexOf(searchQuery.toLowerCase()) + searchQuery.length) }}</span>
+      <ng-container *ngIf="enableHighlighting && shouldHighlight(displayFn(item), searchQuery); else noHighlight">
+        <span [innerHTML]="highlightText(displayFn(item), searchQuery)"></span>
       </ng-container>
       <ng-template #noHighlight>
         <span>{{ displayFn(item) }}</span>

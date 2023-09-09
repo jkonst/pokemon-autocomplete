@@ -9,6 +9,7 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-scrollable-list',
@@ -18,12 +19,15 @@ import {
 export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
   @Input() items: T[] = [];
   @Input() displayFn!: (item: T) => string;
+  @Input() enableHighlighting: boolean = true;
   @Input() searchQuery: string = '';
   @Output() reachedBottom = new EventEmitter<void>();
   @Output() itemSelected = new EventEmitter<T>();
   @ViewChild('scrollableDiv') scrollableDiv!: ElementRef;
   selectedItem?: T;
   isLoading = false;
+
+  constructor(private sanitizer: DomSanitizer) {}
   ngOnChanges(changes: SimpleChanges) {
     const { items } = changes;
     if (items && !items.firstChange) {
@@ -51,4 +55,14 @@ export class ScrollableListComponent<T> implements AfterViewInit, OnChanges {
   shouldHighlight(text: string, query: string): boolean {
     return text?.toLowerCase().includes(query?.toLowerCase());
   }
+
+  highlightText(text: string, query: string) {
+    const startIndex = text.toLowerCase().indexOf(query.toLowerCase());
+    const endIndex = startIndex + query.length;
+    const highlightedText = `
+        ${text.substring(0, startIndex)}<span style='background-color: yellow;'>${text.substring(startIndex, endIndex)}</span>${text.substring(endIndex)}
+    `;
+    return this.sanitizer.bypassSecurityTrustHtml(highlightedText);
+  }
+
 }
