@@ -1,7 +1,9 @@
+@import '../../colors';
+
 .pokemon-details-container {
   height: 96px;
   width: 375px;
-  border: 1px solid #1D1F2A;
+  border: 1px solid $color-dark-gray-border;
   border-radius: 4px;
   padding: 16px 0 16px 16px;
   display: flex;

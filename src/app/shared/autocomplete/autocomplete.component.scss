@@ -1,6 +1,8 @@
+@import '../../colors';
+
 .autocomplete-container {
   position: relative;
-  background-color: #f1f1f1;
+  background-color: $color-light-gray-bg;
   border-radius: 4px 4px 0 0;
   padding: 8px;
   border-bottom: 2px solid transparent;
@@ -12,7 +14,7 @@
     border: none;
     font-size: 16px;
     background: transparent;
-    color: #005CC6;
+    color: $color-dark-blue-link;
     outline: none;
 
     &:focus {
@@ -26,24 +28,24 @@
     position: absolute;
     top: 65%;
     left: 8px;
-    color: #666;
+    color: $color-dark-gray-text;
     transform: translateY(-50%);
     pointer-events: none;
 
     &.active {
-      color: #005CC6;
+      color: $color-dark-blue-link;
     }
   }
 
   .field-label {
     font-size: 11px;
-    color: #666;
+    color: $color-dark-gray-text;
     margin-bottom: 4px;
     display: block;
   }
 
   &.open, &:focus-within {
-    border-bottom: 4px solid #005CC6;
+    border-bottom: 4px solid $color-dark-blue-link;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
@@ -61,12 +63,12 @@
   transform: translateY(-50%);
 
   .search-icon {
-    color: #005CC6;
+    color: $color-dark-blue-link;
   }
 
   .arrow-icon {
     &.up {
-      color: #005CC6;
+      color: $color-dark-blue-link;
     }
   }
 

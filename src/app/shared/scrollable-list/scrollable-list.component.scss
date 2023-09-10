@@ -1,8 +1,9 @@
+@import '../../colors';
 .scrollable-container {
   height: 183px;
   width: 385px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+  border: 1px solid $color-light-gray-border;
   border-radius: 4px;
   box-shadow: 0 8px 16px 0 #0000001F;
   scrollbar-width: none; /* For Firefox */
@@ -23,11 +24,11 @@ li {
   cursor: pointer;
 
   &:hover {
-    background-color: #F2FAFE;
+    background-color: $color-light-blue-hover;
   }
 
   &.selected {
-    background-color: #DFF3FC;
+    background-color: $color-light-blue-selected;
     font-weight: bold;
   }
 }
@@ -37,9 +38,9 @@ li {
   bottom: 0;
   z-index: 1;
   text-align: center;
-  background-color: #fff;
+  background-color: $color-white;
 }
 
 .highlight {
-  background-color: yellow;
+  background-color: $color-yellow-highlight;
 }
