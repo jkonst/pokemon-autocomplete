@@ -15,7 +15,8 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   labelName = 'Favorite Character';
   pokemonDetails: PokemonDetails | null = null;
-  isLoading = false;
+  isLoadingMore = false;
+  isLoadingDetails = false;
   private unsubscribe$ = new Subject<void>();
   private pokemonSearchService = inject(PokemonSearchService);
   constructor(private formBuilder: FormBuilder) {
@@ -38,21 +39,23 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   }
 
   showDetails(selectedPokemon: Pokemon) {
+    this.isLoadingDetails = true;
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
       .subscribe(details => {
         this.pokemonDetails = {...details, name: capitalizeFirst(details.name)};
+        this.isLoadingDetails = false;
       });
   }
 
   loadMore() {
-    if (this.nextUrl && !this.isLoading) {
-      this.isLoading = true;
+    if (this.nextUrl && !this.isLoadingMore) {
+      this.isLoadingMore = true;
       this.pokemonSearchService.fetchMorePokemons(this.nextUrl)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((response: PokemonApiResponse) => {
           this.pokemons = [...this.pokemons, ...response.results];
           this.nextUrl = response.next;
-          this.isLoading = false;
+          this.isLoadingMore = false;
         });
     }
   }

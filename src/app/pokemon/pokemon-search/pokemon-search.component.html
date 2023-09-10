@@ -11,6 +11,11 @@
   >
   </app-autocomplete>
 
+  <!-- Show loading indicator when isLoadingDetails is true -->
+  <div *ngIf="isLoadingDetails" class="loading-container">
+    <p>Loading...</p>
+  </div>
+
   <app-pokemon-details
     *ngIf="pokemonDetails"
     [pokemonDetails]="pokemonDetails"
