@@ -8,8 +8,7 @@
     (loadMoreItems)="loadMore()"
     (showDetails)="showDetails($event)"
     (loadInitialList)="resetPokemons()"
-  >
-  </app-autocomplete>
+  />
 
   <!-- Show loading indicator when isLoadingDetails is true -->
   <div *ngIf="isLoadingDetails" class="loading-container">
@@ -19,6 +18,6 @@
   <app-pokemon-details
     *ngIf="pokemonDetails"
     [pokemonDetails]="pokemonDetails"
-  ></app-pokemon-details>
+  />
 </form>
 

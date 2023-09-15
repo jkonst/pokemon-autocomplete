@@ -27,5 +27,5 @@
   [displayFn]="displayFn"
   [searchQuery]="searchControl.value"
   (itemSelected)="onSelectItem($event)"
-  (reachedBottom)="loadMoreItems.emit()">
-</app-scrollable-list>
+  (reachedBottom)="loadMoreItems.emit()"
+/>
