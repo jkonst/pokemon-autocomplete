@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {capitalizeFirst} from "../../shared/utils";
 import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
@@ -17,6 +17,7 @@ export class PokemonSearchComponent implements OnInit {
   pokemonDetails: PokemonDetails | null = null;
   isLoadingMore = false;
   isLoadingDetails = false;
+  destroyRef = inject(DestroyRef)
   private pokemonSearchService = inject(PokemonSearchService);
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -30,7 +31,7 @@ export class PokemonSearchComponent implements OnInit {
 
   loadInitialPokemons() {
     this.pokemonSearchService.fetchInitialPokemons()
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((response: PokemonApiResponse) => {
         this.pokemons = response.results;
         this.nextUrl = response.next;
@@ -40,7 +41,7 @@ export class PokemonSearchComponent implements OnInit {
   showDetails(selectedPokemon: Pokemon) {
     this.isLoadingDetails = true;
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(details => {
         this.pokemonDetails = {...details, name: capitalizeFirst(details.name)};
         this.isLoadingDetails = false;
@@ -51,7 +52,7 @@ export class PokemonSearchComponent implements OnInit {
     if (this.nextUrl && !this.isLoadingMore) {
       this.isLoadingMore = true;
       this.pokemonSearchService.fetchMorePokemons(this.nextUrl)
-        .pipe(takeUntilDestroyed())
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((response: PokemonApiResponse) => {
           this.pokemons = [...this.pokemons, ...response.results];
           this.nextUrl = response.next;
