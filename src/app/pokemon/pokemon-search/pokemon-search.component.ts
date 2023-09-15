@@ -1,15 +1,15 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Subject, takeUntil} from "rxjs";
 import {capitalizeFirst} from "../../shared/utils";
 import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-pokemon-search',
   templateUrl: './pokemon-search.component.html',
   styleUrls: ['./pokemon-search.component.scss']
 })
-export class PokemonSearchComponent implements OnInit, OnDestroy {
+export class PokemonSearchComponent implements OnInit {
   pokemons: Pokemon[] = [];
   nextUrl?: string;
   searchForm: FormGroup;
@@ -17,7 +17,6 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   pokemonDetails: PokemonDetails | null = null;
   isLoadingMore = false;
   isLoadingDetails = false;
-  private unsubscribe$ = new Subject<void>();
   private pokemonSearchService = inject(PokemonSearchService);
   constructor(private formBuilder: FormBuilder) {
     this.searchForm = this.formBuilder.group({
@@ -31,7 +30,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
 
   loadInitialPokemons() {
     this.pokemonSearchService.fetchInitialPokemons()
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(takeUntilDestroyed())
       .subscribe((response: PokemonApiResponse) => {
         this.pokemons = response.results;
         this.nextUrl = response.next;
@@ -41,6 +40,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   showDetails(selectedPokemon: Pokemon) {
     this.isLoadingDetails = true;
     this.pokemonSearchService.fetchPokemonDetails(selectedPokemon.name)
+      .pipe(takeUntilDestroyed())
       .subscribe(details => {
         this.pokemonDetails = {...details, name: capitalizeFirst(details.name)};
         this.isLoadingDetails = false;
@@ -51,7 +51,7 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
     if (this.nextUrl && !this.isLoadingMore) {
       this.isLoadingMore = true;
       this.pokemonSearchService.fetchMorePokemons(this.nextUrl)
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntilDestroyed())
         .subscribe((response: PokemonApiResponse) => {
           this.pokemons = [...this.pokemons, ...response.results];
           this.nextUrl = response.next;
@@ -71,10 +71,5 @@ export class PokemonSearchComponent implements OnInit, OnDestroy {
   resetPokemons() {
     this.pokemonDetails = null;
     this.loadInitialPokemons();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }
