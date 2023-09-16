@@ -1,5 +1,4 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
 import {capitalizeFirst} from "../../shared/utils";
 import {Pokemon, PokemonApiResponse, PokemonDetails, PokemonSearchService} from "../services/pokemon-search.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
@@ -12,18 +11,12 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 export class PokemonSearchComponent implements OnInit {
   pokemons: Pokemon[] = [];
   nextUrl?: string;
-  searchForm: FormGroup;
   labelName = 'Favorite Character';
   pokemonDetails: PokemonDetails | null = null;
   isLoadingMore = false;
   isLoadingDetails = false;
   destroyRef = inject(DestroyRef)
   private pokemonSearchService = inject(PokemonSearchService);
-  constructor(private formBuilder: FormBuilder) {
-    this.searchForm = this.formBuilder.group({
-      search: ['']
-    });
-  }
 
   ngOnInit() {
     this.loadInitialPokemons();
