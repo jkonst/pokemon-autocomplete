@@ -3,6 +3,7 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {arraysAreEqual} from "../utils";
 import {ScrollableListComponent} from "../scrollable-list/scrollable-list.component";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   standalone: true,
@@ -29,7 +30,7 @@ export class AutocompleteComponent<T> implements OnChanges {
   filteredItems: T[] = [];
 
   constructor() {
-    this.searchControl.valueChanges.subscribe(value => {
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed()).subscribe(value => {
       this.filterItems(value);
     });
   }
